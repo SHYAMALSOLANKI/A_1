@@ -1,0 +1,32 @@
+# PB2A Architecture
+
+@startuml
+package "Client" {
+  [CLI/Web] --> [Orchestrator]: /chat
+}
+
+package "Orchestrator Service" {
+  [FastAPI] --> [Workflow Engine]
+  [Workflow Engine] --> [Safety Guard]
+  [Workflow Engine] --> [Model Provider Interface]
+}
+
+package "Memory Package" {
+  [Retriever] --> [Postgres (pgvector)]
+  [Tracer] --> [Postgres (pgvector)]
+}
+
+package "Infra" {
+  [Local Model Server (vLLM/LlamaCpp)]
+  [Postgres DB]
+}
+
+[Model Provider Interface] --> [Local Model Server]: HTTP
+[Orchestrator Service] --> [Memory Package]
+
+package "Offline Training" {
+  [Dataset Builder] --> [Postgres DB]: Read Traces
+  [Adapter Trainer] --> [Dataset Builder]: Consume
+  [Adapter Trainer] --> [Base Model]: LoRA
+}
+@enduml

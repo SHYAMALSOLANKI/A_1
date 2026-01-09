@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "orchestrator"
+version = "0.1.0"
+description = "FastAPI Orchestrator for PB2A"
+authors = ["Admin <admin@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.104.1"
+uvicorn = "^0.24.0"
+memory = { path = "../../packages/memory", develop = true }
+pb2s-prompts = { path = "../../packages/pb2s_prompts", develop = true }
+evals = { path = "../../packages/evals", develop = true }
+openai = "^1.3.0"
+pydantic = "^2.5.0"
+opentelemetry-api = "^1.21.0"
+opentelemetry-sdk = "^1.21.0"
+opentelemetry-instrumentation-fastapi = "^0.42b0"
+tenacity = "^8.2.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

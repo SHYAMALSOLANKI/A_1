@@ -1,0 +1,27 @@
+# Environments and Keys
+.venv/
+keys/
+*.env
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Data and Models
+training_data/
+*.jsonl
+*.safetensors
+*.pth
+*.pt
+drrl-adapter-output/
+drrl-scratch-output/
+checkpoints/
+
+# Deployment & Logs
+deploy_package.zip
+*.log
+*.zip
+download_manual.log
+node_modules/
+dist/
+build/

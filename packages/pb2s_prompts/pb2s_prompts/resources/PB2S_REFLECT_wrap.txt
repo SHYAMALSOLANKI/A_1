@@ -1,0 +1,13 @@
+Review the DRAFT response below.
+Identify potential errors, safety issues, or opportunities for improvement.
+Output your reflection as a list of bullet points (max 3).
+Then, provide a REVISED version of the response that incorporates these improvements.
+
+Format:
+REFLECT:
+- <Point 1>
+- <Point 2>
+- <Point 3>
+
+REVISE:
+<Revised Response>

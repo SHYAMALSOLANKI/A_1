@@ -1,0 +1,13 @@
+Reflect on the DRAFT below. In ≤3 bullets list contradictions/assumptions or missing edge cases, then offer a corrected version.
+Format exactly:
+
+REFLECT:
+- ...
+- ...
+- ...
+
+REVISE:
+<final improved answer in 3–8 sentences>
+
+If you added a useful discriminator or check, add:
+LEARNED: <one-line rule>

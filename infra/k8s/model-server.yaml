@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: model-server
+  template:
+    metadata:
+      labels:
+        app: model-server
+    spec:
+      containers:
+      - name: vllm
+        image: vllm/vllm-openai:latest
+        command: ["python3", "-m", "vllm.entrypoints.openai.api_server", "--model", "meta-llama/Llama-2-7b-hf"]
+        ports:
+        - containerPort: 8000
+        # In real K8s, use GPU resources
+        # resources:
+        #   limits:
+        #     nvidia.com/gpu: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: model-server
+spec:
+  selector:
+    app: model-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000

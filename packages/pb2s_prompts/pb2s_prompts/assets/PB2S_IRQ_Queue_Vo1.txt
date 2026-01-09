@@ -1,0 +1,5 @@
+# PB2S IRQ Queue v0.1
+# Format: [ISO time] SRC: <context>  RULE: <one-line rule>
+
+[YYYY-MM-DD HH:MM] SRC: Test#1
+RULE: When contrasting related faculties, include mechanism, constraints, horizon, failure modes, and at least one operational self-test.

@@ -1,0 +1,24 @@
+model_name: "scratch-model-vast"
+model_config:
+  hidden_size: 512       # Kept lean
+  num_hidden_layers: 24  # Increased to 24 Physical Layers
+  num_attention_heads: 8 
+  intermediate_size: 2048
+  vocab_size: 49152
+  max_position_embeddings: 2048 # Expanded Context Window
+dataset_paths:
+  - "training_data/01_english.jsonl"
+  - "training_data/02_maths.jsonl"
+  - "training_data/03_logic.jsonl"
+  - "training_data/04_science.jsonl"
+  - "training_data/05_coding.jsonl"
+output_dir: "./drrl-vast-output"
+max_seq_length: 2048
+learning_rate: 1e-4      # Slightly Lowered for Deeper Network
+batch_size: 16           # Increased Batch Size for 48GB VRAM
+gradient_accumulation_steps: 4
+num_train_epochs: 3
+logging_steps: 10
+save_steps: 1000
+warmup_steps: 200
+check_prompt: "User: Explain the nature of gravity.\n"

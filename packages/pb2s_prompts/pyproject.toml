@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "pb2s-prompts"
+version = "0.1.0"
+description = "Prompt templates and renderers for PB2A"
+authors = ["Admin <admin@example.com>"]
+packages = [{include = "pb2s_prompts"}]
+include = [
+    "pb2s_prompts/resources/*.txt",
+    "pb2s_prompts/resources/policies/*.txt"
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+jinja2 = "^3.1.2"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

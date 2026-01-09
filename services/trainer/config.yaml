@@ -1,0 +1,10 @@
+dataset_query: "SELECT user_input, revision FROM turns WHERE revision IS NOT NULL"
+model_name: "meta-llama/Llama-2-7b-hf"
+output_dir: "./adapter-v1"
+learning_rate: 2e-4
+batch_size: 4
+epochs: 1
+peft:
+  r: 8
+  lora_alpha: 16
+  lora_dropout: 0.1

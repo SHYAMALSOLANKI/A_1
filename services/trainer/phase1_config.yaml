@@ -1,0 +1,16 @@
+
+model_name: "HuggingFaceTB/SmolLM2-360M-Instruct"
+dataset_paths:
+  - "C:/Users/Shyamal solanki/A_1/training_data/corpus.jsonl"
+  - "C:/Users/Shyamal solanki/A_1/training_data/mega_corpus.jsonl"
+output_dir: "./phase1-output"
+max_seq_length: 4096  # Huge context as requested
+learning_rate: 3e-4
+batch_size: 4
+gradient_accumulation_steps: 4
+num_train_epochs: 1
+logging_steps: 10
+save_steps: 500
+warmup_steps: 100
+# Visualizer Prompt to check emergence
+emergence_prompt: "The quick brown fox jumps over the lazy dog because"

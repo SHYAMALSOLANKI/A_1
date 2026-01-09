@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  orchestrator:
+    build:
+      context: ../../services/stack_server
+      dockerfile: Dockerfile
+    ports:
+      - "9000:8000"
+    volumes:
+      - ../../services/stack_server:/app
+      - ../../packages:/packages
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+
+  trainer:
+    build:
+      context: ../../
+      dockerfile: services/trainer/Dockerfile
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://user:password@postgres:5432/pb2a_db
+    depends_on:
+      - postgres
+    volumes:
+      - ../../services:/app/services
+      - ../../packages:/app/packages
+      - ../../training_data:/app/training_data
+    working_dir: /app/services/trainer
+    command: python train_drrl.py
+
+  model-server:
+    image: python:3.11-slim
+    # Placeholder for vLLM or standard OpenAI compatible server
+    # Since we don't have GPUs here, just running a stub or infinite loop
+    command: python -c "import http.server; http.server.HTTPServer(('', 8000), http.server.SimpleHTTPRequestHandler).serve_forever()"
+    ports:
+      - "8001:8000"
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pb2a_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d pb2a_db"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

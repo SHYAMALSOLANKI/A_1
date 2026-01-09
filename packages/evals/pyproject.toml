@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "evals"
+version = "0.1.0"
+description = "Evaluation task runners for PB2A"
+authors = ["Admin <admin@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pb2s-prompts = { path = "../pb2s_prompts", develop = true }
+pytest = "^7.4.0"
+httpx = "^0.25.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

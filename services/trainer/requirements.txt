@@ -1,0 +1,8 @@
+torch
+transformers
+requests
+tqdm
+pyyaml
+accelerate
+peft
+datasets
