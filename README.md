@@ -68,7 +68,8 @@ The \RecurrentReasoningNetwork\ differs from standard Transformers in fundamenta
 ### B. The Controller (\PB2SModel\)
 This is not just a PyTorch Module; it is a **Managed Entity**.
 *   It does not support standard \.generate()\.
-*   It implements \un_cycle(prompt)\, which enforces the rigid lifecycle of generation. It is impossible to generate text without it passing through the audit logic.
+*   It implements \
+un_cycle(prompt)\, which enforces the rigid lifecycle of generation. It is impossible to generate text without it passing through the audit logic.
 
 ---
 
@@ -114,3 +115,4 @@ Loss = CrossEntropy(Prediction, Target) * (1 + (Target_Score - Draft_Score))
 \\\
 
 This ensures the model effectively "learns to listen" to the symbolic backend.
+
