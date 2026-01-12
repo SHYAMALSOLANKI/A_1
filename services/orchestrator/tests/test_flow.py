@@ -1,8 +1,10 @@
+import asyncio
+
+import pytest
+from fastapi.testclient import TestClient
+
 from services.orchestrator.main import app, workflow
 from services.orchestrator.safety import SafetyGuard
-from fastapi.testclient import TestClient
-import pytest
-import pytest_asyncio
 
 client = TestClient(app)
 
@@ -25,11 +27,12 @@ def test_pii_redaction():
     assert "555-123-4567" not in redacted
     assert "bob@corp.com" not in redacted
 
-@pytest.mark.asyncio
-async def test_workflow_mock():
+def test_workflow_mock():
     # Mocking would be ideal, but for now we test the function signature
     # This runs against the actual (likely mock) provider configured in env
-    result = await workflow.run_loop("Solve 2+2", ["Rule: Be concise"], profile_name="minimal")
+    result = asyncio.run(
+        workflow.run_loop("Solve 2+2", ["Rule: Be concise"], profile_name="minimal")
+    )
     
     # Check structure of result dict
     assert "draft" in result

@@ -1,11 +1,8 @@
 import os
 import yaml
-import requests
 import torch
-import torch.nn as nn
 import logging
 import json
-import time
 from torch.utils.data import Dataset, DataLoader
 from transformers import (
     PreTrainedTokenizerFast,
@@ -30,7 +27,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # --- Configuration ---
-STACK_SERVER_URL = os.getenv("STACK_SERVER_URL", "http://orchestrator:8000")
+STACK_SERVER_URL = os.getenv("STACK_SERVER_URL", "http://localhost:8000")
 TOKENIZER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../tokenizer"))
 
 # Default Hyperparameters
@@ -158,21 +155,22 @@ def train_drrl():
             progress_bar = tqdm(phase_loader, desc=f"Phase {d_idx+1} ({os.path.basename(d_path)})")
             
             for batch_prompts in progress_bar:
-            prompt = batch_prompts[0]
-            if "\nDRAFT:" in prompt: prompt = prompt.split("\nDRAFT:")[0].strip()
-            
-            # --- FULL CYCLE: DRAFT -> REFLECT -> REVISE -> LEARN ---
-            trace = pb2s.run_cycle(prompt)
-            
-            loss = trace.get("loss", 0.0)
-            score = trace.get("score", 0.0)
-            
-            global_step += 1
-            if global_step % 5 == 0:
-                progress_bar.set_postfix({
-                    "Loss": f"{loss:.2f}",
-                    "Score": f"{score:.2f}", 
-                })
+                prompt = batch_prompts[0]
+                if "\nDRAFT:" in prompt:
+                    prompt = prompt.split("\nDRAFT:")[0].strip()
+
+                # --- FULL CYCLE: DRAFT -> REFLECT -> REVISE -> LEARN ---
+                trace = pb2s.run_cycle(prompt)
+
+                loss = trace.get("loss", 0.0)
+                score = trace.get("score", 0.0)
+
+                global_step += 1
+                if global_step % 5 == 0:
+                    progress_bar.set_postfix({
+                        "Loss": f"{loss:.2f}",
+                        "Score": f"{score:.2f}",
+                    })
                 
     # Save
     out_dir = config.get("output_dir", "./drrl_output")

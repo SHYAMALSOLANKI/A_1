@@ -48,7 +48,7 @@ A_1/
 \\\
 
 ### Infrastructure Map
-*   **Orchestrator (Port 9000)**: Host the \stack_server\. Providing \/audit\, \/policy\, and \/quality\ endpoints.
+*   **Stack Server (Port 9000)**: Hosts \stack_server\. Provides \/audit\, \/config\/policy\, and \/quality\ endpoints.
 *   **Trainer**: A Python container that loads the Model and iteratively queries the Orchestrator.
 *   **Postgres**: Vector database for long-term memory (optional integration).
 
@@ -69,7 +69,7 @@ The \RecurrentReasoningNetwork\ differs from standard Transformers in fundamenta
 This is not just a PyTorch Module; it is a **Managed Entity**.
 *   It does not support standard \.generate()\.
 *   It implements \
-un_cycle(prompt)\, which enforces the rigid lifecycle of generation. It is impossible to generate text without it passing through the audit logic.
+run_cycle(prompt)\, which enforces the rigid lifecycle of generation. It is impossible to generate text without it passing through the audit logic.
 
 ---
 
@@ -80,7 +80,7 @@ The training process is defined in \services/trainer/train_drrl.py\. It is an **
 ### The Algorithm:
 1.  **DRAFT**: The Neural Network generates a response to a prompt ($).
     update_files.py \hat{y}_{draft} = f_\\theta(x) update_files.py
-2.  **AUDIT**: The \PB2SModel\ sends \\hat{y}_{draft}\ to the **Stack Server** (\http://orchestrator:8000/audit\).
+2.  **AUDIT**: The \PB2SModel\ sends \\hat{y}_{draft}\ to the **Stack Server** (\http://localhost:9000/audit\).
 3.  **REFLECT**: The Stack Server runs:
     *   **PPS**: Checks for forbidden content.
     *   **CAE**: Checks logical consistency.

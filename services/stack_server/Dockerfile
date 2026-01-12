@@ -18,7 +18,7 @@ RUN python -c "from sentence_transformers import CrossEncoder; CrossEncoder('cro
 COPY . .
 
 # Expose port
-EXPOSE 9000
+EXPOSE 8000
 
 # Run API
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "9000"]
+CMD ["uvicorn", "services.stack_server.api:app", "--host", "0.0.0.0", "--port", "8000"]
