@@ -33,9 +33,12 @@ class DynamicQualityController:
         """
         # Categorize rule type if generic
         category = "global"
-        if "math" in rule_type.lower(): category = "math"
-        elif "grammar" in rule_type.lower(): category = "grammar"
-        elif "logic" in rule_type.lower(): category = "logic"
+        if "math" in rule_type.lower():
+            category = "math"
+        elif "grammar" in rule_type.lower():
+            category = "grammar"
+        elif "logic" in rule_type.lower():
+            category = "logic"
         
         self.scores[category].append(score)
         self.scores["global"].append(score)
@@ -67,12 +70,20 @@ class DynamicQualityController:
 
     def get_threshold(self, rule_type: str) -> float:
         # Simple mapping for now
-        if "math" in rule_type.lower(): return self.thresholds["math"]
-        if "grammar" in rule_type.lower(): return self.thresholds["grammar"]
-        return 0.8 # Default
+        if "math" in rule_type.lower():
+            base = self.thresholds["math"]
+        elif "grammar" in rule_type.lower():
+            base = self.thresholds["grammar"]
+        else:
+            base = 0.8
+        return min(0.95, max(0.6, base + (self.curriculum_difficulty * 0.1)))
+
+    def get_difficulty(self) -> float:
+        return self.curriculum_difficulty
 
     def global_mean(self) -> float:
-        if not self.scores["global"]: return 0.5
+        if not self.scores["global"]:
+            return 0.5
         return statistics.mean(self.scores["global"])
 
     def report_metrics(self) -> Dict[str, Any]:
